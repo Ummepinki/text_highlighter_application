@@ -1,0 +1,37 @@
+#root{
+    width:100vh;
+    height: 100vh;
+    top:0;
+    right:0;
+    bottom: 0;
+    left:0;
+    background-color: black;
+    color: aliceblue;
+    margin: 0;
+    padding: 0;
+    
+  
+  }
+  
+  .main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .paragraphs{
+    width: 25%;
+    background-color: red;
+    padding: 10px;
+  }
+  .mainDiv{
+  width: 45%;
+    background-color: green;
+    padding: 10px;
+  }
+  
+  .annotation{
+   width: 30%;
+    background-color: blue;
+  }

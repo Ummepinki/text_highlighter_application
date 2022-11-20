@@ -1,10 +1,13 @@
-import logo from "./logo.svg";
 import "./App.css";
+import Header from "./Pages/Header";
+
+import Highlight from "./Pages/Highlight";
 
 function App() {
   return (
     <div className="App">
-      <h1>HELLO</h1>
+      <Header />
+      <Highlight />
     </div>
   );
 }
