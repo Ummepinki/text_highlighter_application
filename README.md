@@ -1,11 +1,13 @@
 Project name : Text Highlighter application
 
-- Features
+Features
+
 - Text highlight
 - Delete select text.
 - User see the text.
 
-- Technology used -
+Technology used -
+
 - ReactJs
 - Javascript
 - Style components
