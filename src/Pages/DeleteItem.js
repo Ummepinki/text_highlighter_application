@@ -2,13 +2,13 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
-export default function DeleteItem({ deleteMe, onClose }) {
+export default function DeleteItem({ deleteIn, onClose }) {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
 
   const onDelete = () => {
-    deleteMe();
+    deleteIn();
     onClose();
     setOpen(false);
   };
@@ -59,7 +59,7 @@ export default function DeleteItem({ deleteMe, onClose }) {
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <div className="mt-2">
-                        <p className="text-sm text-dark-500">
+                        <p className="text-lg text-dark-500">
                           Are you sure you want to delete?
                         </p>
                       </div>

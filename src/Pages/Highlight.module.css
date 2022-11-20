@@ -39,8 +39,13 @@
   }
   .cardHeader {
     background-color: #4f46e5;
-    padding: 10px;    
-    /* margin-bottom: 20px; */
+    padding: 10px;  
+    color:white ; 
+    
+  }
+  .fas fa bar{
+    color:white;
+    background-color: white;
   }
   
   @media (prefers-reduced-motion: no-preference) {

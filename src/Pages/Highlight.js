@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { paragraph } from "./Paragraphs/Paragraphs";
-
 import DeleteItem from "./DeleteItem";
 import Style from "./Highlight.module.css";
-const Highlight = ({ children: text = "", tag = [] }) => {
-  if (!tag?.length) return text;
 
-  let _tag = [];
+const Highlight = ({ children: text = "", tags = [] }) => {
+  if (!tags?.length) return text;
 
-  for (let index = 0; index < tag.length; index++) {
-    const element = tag[index];
+  let _tags = [];
 
-    _tag.push(element.key);
+  for (let index = 0; index < tags.length; index++) {
+    const element = tags[index];
+
+    _tags.push(element.key);
   }
 
-  const matches = [...text.matchAll(new RegExp(_tag.join("|"), "ig"))];
+  const matches = [...text.matchAll(new RegExp(_tags.join("|"), "ig"))];
   const startText = text.slice(0, matches[0]?.index);
   return (
     <span>
       {startText}
       {matches.map((match, e) => {
         const startIndex = match.index;
-        const getType = tag.filter((tg) => tg.key === match)[0]?.category;
+        const getType = tags.filter((tg) => tg.key === match)[0]?.category;
         const currentText = match[0];
         const endIndex = startIndex + currentText.length;
 
@@ -33,12 +33,12 @@ const Highlight = ({ children: text = "", tag = [] }) => {
         return (
           <span key={e}>
             <mark>
-              {currentText}{" "}
+              {currentText}
               <span
                 style={{
-                  color: "red",
+                  color: "yellow",
                   marginRight: 3,
-                  border: "1px solid red",
+                  border: "1px solid yellow",
                 }}
               >
                 {getType}
@@ -52,28 +52,27 @@ const Highlight = ({ children: text = "", tag = [] }) => {
   );
 };
 function ParasList({ activeParaId, setPara }) {
-  const paragraphHanlder = (para) => {
+  const paragraphHandler = (para) => {
     setPara(para);
   };
   return (
-    <ul>
+    <ol style={{ listStyle: "upper-roman" }}>
       {paragraph.map((para, i) => (
         <li
           style={{
             cursor: "pointer",
             textAlign: "left",
-            // marginBottom: 10,
             padding: 10,
             backgroundColor: activeParaId === para.id && "#ccc",
             border: "1px solid black",
           }}
           key={i}
-          onClick={() => paragraphHanlder(para)}
+          onClick={() => paragraphHandler(para)}
         >
-          {para.text?.slice(0, 35)}...
+          {para.text?.slice(0, 30)}...
         </li>
       ))}
-    </ul>
+    </ol>
   );
 }
 
@@ -98,12 +97,10 @@ export default function MainContainer() {
       txt = window.document.selection.createRange().text;
     }
     if (txt?.toString().length < 3) {
-      // alert("min length 2 required");
       return;
     }
 
     if (txt?.toString().length > 20) {
-      // alert("Max length 15 required");
       return;
     }
 
@@ -128,41 +125,34 @@ export default function MainContainer() {
     return txt;
   }
 
-  // if(category === "person"){
+  const [deleteIndata, setdeleteIndata] = useState("");
 
-  // }
-  const [deletMedata, setdeletMedata] = useState("");
-
-  function deleteMe() {
-    let remain = selected?.filter((item) => item.key !== deletMedata);
+  function deleteIn() {
+    let remain = selected?.filter((item) => item.key !== deleteIndata);
     setSelected(remain);
     handleClose();
   }
 
-  function deleteMeData(txt) {
-    setdeletMedata(txt);
+  function deleteInData(txt) {
+    setdeleteIndata(txt);
     setIsDelete(true);
   }
 
   function handleClose() {
-    // setCounter(counter-1)
-
     setIsDelete(false);
   }
 
   return (
     <div className={Style.mainContainer}>
-      {isDelete && <DeleteItem deleteMe={deleteMe} onClose={handleClose} />}
+      {isDelete && <DeleteItem deleteIn={deleteIn} onClose={handleClose} />}
 
       <div className={Style.divFirst}>
         <div className={Style.cardHeader}>
-          <h1>Records</h1>
+          <i className="fas fa bar">
+            <h1>Records</h1>
+          </i>
         </div>
-        <ParasList
-          activeParaId={para?.id}
-          // tags={selected}
-          setPara={setPara}
-        />
+        <ParasList activeParaId={para?.id} setPara={setPara} />
       </div>
       <div className={Style.divTwo}>
         <div
@@ -222,7 +212,7 @@ export default function MainContainer() {
           CLEAR ALL
         </button>
 
-        <h1>SELECTED LIST</h1>
+        <h1>Selected LIST</h1>
 
         {selected.length === 0 &&
           "Select your words from the paragraph list..."}
@@ -248,13 +238,12 @@ export default function MainContainer() {
                   width: "40px",
                   color: "black",
                   marginLeft: 5,
-                  borderBottom: "1px solid red",
                 }}
               >
                 {item.category}
               </span>
               <span
-                onClick={() => deleteMeData(item.key)}
+                onClick={() => deleteInData(item.key)}
                 style={{ color: "red", marginLeft: 20, cursor: "pointer" }}
               >
                 X
@@ -263,8 +252,6 @@ export default function MainContainer() {
           );
         })}
       </div>
-
-      {/* <ParasList /> */}
     </div>
   );
 }
